@@ -1,0 +1,34 @@
+import numpy as np
+
+# 시퀀스를 입력 및 출력으로 나누는 함수
+def split_sequence(sequence, n_steps_in, n_steps_out):
+    X, y = [], []
+    
+    for i in range(len(sequence)):
+        # 끝점을 정의
+        end_ix = i + n_steps_in
+        
+        # 만약 끝점이 전체 시퀀스의 범위를 벗어나면 중단
+        if end_ix + n_steps_out > len(sequence):
+            break
+        
+        # 입력과 출력 시퀀스 분리
+        seq_x = sequence[i:end_ix]
+        seq_y = sequence[end_ix:end_ix + n_steps_out]
+        X.append(seq_x)
+        y.append(seq_y)
+    
+    return np.array(X), np.array(y)
+
+# 예시 데이터
+sequence = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+
+# 입력 스텝: 3, 출력 스텝: 2
+n_steps_in, n_steps_out = 3, 2
+X, y = split_sequence(sequence, n_steps_in, n_steps_out)
+
+# 결과 출력
+print("입력 시퀀스(X):")
+print(X)
+print("출력 시퀀스(y):")
+print(y)
